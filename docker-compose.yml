@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  mysql:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: mysql_oracle_8
+    restart: always
+    ports:
+      - 23306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "tutorial"
+      MYSQL_DATABASE: "db_tutorial"
+      MYSQL_USER: "userdb"
+      MYSQL_PASSWORD: "userpassword"
+    volumes:
+      - ./schemas:/var/lib/mysql:rw 
+    networks:
+      mysql_network:
+        aliases:
+          - mysql_server_host
+
+volumes:
+  schemas: {}
+networks:
+  mysql_network:
+    name: mysql_net
+    driver: bridge
